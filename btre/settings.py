@@ -155,4 +155,4 @@ except ImportError:
     pass
 
 
-CSRF_TRUSTED_ORIGINS = ["https://.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = ["https://house-rent.herokuapp.com"]
