@@ -88,6 +88,15 @@
                   </a>
                 </div>
                 {% endif %}
+                {% if listing.video %}
+                <div class="col-md-2">
+                  <a href="{{ listing.video.url }}" data-lightbox="home-images">
+                    <video width="320" height="140" controls>
+                    <source src="{{ listing.video.url }}" alt="video is loading" class="img-fluid">
+                    </video>
+                  </a>
+                </div>
+                {% endif %}
               </div>
               <!-- Fields -->
               <div class="row mb-5 fields">
@@ -108,6 +117,11 @@
                     <li class="list-group-item text-secondary">
                       <i class="fas fa-car"></i> Garage:
                       <span class="float-right">{{ listing.garage }}
+                      </span>
+                    </li>
+                    <li class="list-group-item text-secondary">
+                      <i class="fas fa-food"></i> Near by food place:
+                      <span class="float-right">{{ listing.WhichFoodPlace }}
                       </span>
                     </li>
                   </ul>
