@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .choices import price_choices, bedroom_choices, state_choices 
+from contacts.models import reviews
 
 from .models import Listing
 
@@ -21,9 +22,10 @@ def index(request):
 
 def listing(request, listing_id):
     listing = get_object_or_404(Listing, pk=listing_id)
-
+    comments = reviews.objects.filter(post=listing_id)
     context = {
-        'listing': listing
+        'listing': listing,
+        'comments':comments
     }
 
     return render(request, 'listings/listing.html', context)

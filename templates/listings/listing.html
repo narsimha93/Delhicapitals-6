@@ -168,6 +168,9 @@
                 </div>
               </div>
               <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An Inquiry</button>
+              <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#transportationModal">Help in Transportation</button>
+              <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#booking">Book the House</button>
+              <button class="btn-primary btn-block btn-lg" > <a class="btn-primary btn-block btn-lg" href="https://www.indiafilings.com/sample-format/residential-rental-agreement-format.doc">Download the aggrement</a> </button>
             </div>
           </div>
         </div>
@@ -220,6 +223,160 @@
           </div>
         </div>
       </div>
-    
+    <!-- transportationModal  -->
+    <div class="modal fade" id="transportationModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="inquiryModalLabel">Get a truck at the door step</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'trans' %}" method="POST">
+              {% csrf_token %}
+              {% if user.is_authenticated %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+              {% else %}
+              <input type="hidden" name="user_id" value="0">
+              {% endif %}
+              <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+              <input type="hidden" name="listing_id" value="{{ listing.id }}">
+              <div class="form-group">
+                <label for="property_name" class="col-form-label">Property:</label>
+                <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
+              </div>
+              <div class="form-group">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-form-label">Email:</label>
+                <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+              </div>
+              <div class="form-group">
+                <label for="owner phone number" class="col-form-label">owner phone number:</label>
+                <input type="text" name="owner_phone_number" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="owner_pincode" class="col-form-label">onwer address:</label>
+                <textarea name="onwer_address" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="owner_pincode" class="col-form-label">owner pincode</label>
+                <textarea name="owner_pincode" class="form-control"></textarea>
+              </div><div class="form-group">
+                <label for="no_of_boxes" class="col-form-label">no of boxes:</label>
+                <textarea name="no_of_boxes" class="form-control"></textarea>
+              </div><div class="form-group">
+                <label for="truck_requirement" class="col-form-label">truck_requirement</label>
+                <textarea name="truck_requirement" class="form-control"></textarea>
+              </div>
+              <hr>
+              <input type="submit" value="Send" class="btn btn-block btn-secondary">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <!-- Book the house-->
+  <div class="modal fade" id="booking" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inquiryModalLabel">Book the House </h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'book' %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% else %}
+            <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="phone number" class="col-form-label">phone_number:</label>
+              <input type="text" name="phone_number" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="adhar card" class="col-form-label">adhar card:</label>
+              <input name="adhar_card" class="form-control"></input>
+            </div>
+            <div class="form-group">
+              <label for="pan_card" class="col-form-label">pan card</label>
+              <input name="pan_card" class="form-control"></input>
+            </div><div class="form-group">
+              <label for="family members" class="col-form-label">family members:</label>
+              <textarea name="family_members" class="form-control"></textarea>
+            </div><div class="form-group">
+              <label for="aggrement" class="col-form-label">aggrement</label>
+              <input name="aggrement" type="file" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+<!-- review system-->
 
+<div class = "container">
+  <h2>Reviews({{comments.count}})</h2> 
+  {% if user.is_authenticated %}
+          <form action="{% url 'reviews' %}" method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                  <label for="comment">Post Comment </label>
+                  <input type="text" class="form-control" name="comment" id="comment" 
+                  placeholder="Enter comment here">
+                  </div>
+                  <input type="hidden" name="listing_id" value="{{listing.id}}">
+                 
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+ {% else %}
+  Please login to post a comment 
+  {% endif %}
+        </div>
+      <div class="container">
+       
+        <div class = "row my-3">
+         <div class = "col-md-1">
+          
+         </div>
+         {% for comment in comments %}
+        </div>
+         <div class = "col-md-11">
+         <b>{{comment.user.username}}</b> 
+            <span class = "badge bg-secondary">{{comment.timestamp| naturaltime}}</span>
+         <div>{{comment.comment}}</div>
+         <br>
+         {% endfor %}
+         </div>
+        </div>
+      </div>
+    
+ 
 {% endblock %}

@@ -4,6 +4,7 @@ from realtors.models import Realtor
 
 
 class Listing(models.Model):
+    #sno = models.AutoField(primary_key=True)
     realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
@@ -31,6 +32,9 @@ class Listing(models.Model):
     video = models.FileField(upload_to='video/%Y/%m/%d/', blank=True)
     is_published = models.BooleanField(default=True)
     list_date = models.DateTimeField(default=datetime.now, blank=True)
+
+    # aggrement
+    aggrement = models.FileField(blank=True)
 
     def __str__(self):
         return self.title
