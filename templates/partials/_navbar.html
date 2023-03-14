@@ -50,9 +50,12 @@
           class="nav-item mr-3"
         {% endif %}
       >
+      {% if user.is_authenticated %}
         <a class="nav-link" href="{% url 'allbookings' %}">My bookings</a>
+        {% endif %}
       </li>
       </ul>
+     
 
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
