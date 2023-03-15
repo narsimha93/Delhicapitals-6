@@ -157,3 +157,8 @@ except ImportError:
 
 
 CSRF_TRUSTED_ORIGINS = ["https://house-rent.herokuapp.com"]
+
+
+#razorpay
+razorpay_id = 'rzp_test_qARMVcZK63tMuj'
+razorpay_account_id = 'CndQjCKIo5kuJgqFhjOKl46N'
