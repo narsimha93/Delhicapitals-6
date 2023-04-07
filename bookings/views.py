@@ -19,8 +19,8 @@ def booking (request):
         name = request.POST['name']
         email = request.POST['email']
         phone_number = request.POST['phone_number']
-        adhar_card = request.POST['adhar_card']
-        pan_card  = request.POST['pan_card']
+       
+        social_security_number  = request.POST['social_security_number']
         family_members = request.POST['family_members']
         aggrement = request.POST['aggrement']
         realtor_email = request.POST['realtor_email']
@@ -35,7 +35,7 @@ def booking (request):
                 return redirect('/listings/'+listing_id)
 
         contact = Bookings( listing_id_id=int(listing_id), name=name, email=email, phone_number=phone_number,
-                           adhar_card=adhar_card, pan_card=pan_card,family_members=family_members ,
+                            social_security_number=social_security_number,family_members=family_members ,
                            aggrement=aggrement,user_id_id=user_id )
 
         contact.save()

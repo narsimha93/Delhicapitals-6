@@ -3,6 +3,13 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .choices import price_choices, bedroom_choices, state_choices 
 from contacts.models import reviews
 
+# api
+
+from .serializer import listingserializer
+from django.http.response import Http404
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Listing
 
 
@@ -73,3 +80,40 @@ def search(request):
     }
 
     return render(request, 'listings/search.html', context)
+
+
+# ----------------------------------------------------------------------------------------
+
+# api of all listing and get listing by id
+
+class listingAPIView(APIView):
+    
+        # READ a employee
+        def get_object(self, pk):
+            try:
+                return Listing.objects.get(pk=pk)
+            except Listing.DoesNotExist:
+                raise Http404
+        # get the employee by id otherwise all the employee
+        def get(self, request, pk=None, format=None):
+            if pk:
+                data = self.get_object(pk)
+                serializer = listingserializer(data)
+                return Response(serializer.data)
+
+            else:
+                data = Listing.objects.all()
+                serializer = listingserializer(data, many=True)
+
+                return Response(serializer.data)
+      
+        # delete the employee
+        def delete(self, request, pk, format=None):
+            emp_to_delete =  listing.objects.get(pk=pk)
+
+            # delete the todo
+            emp_to_delete.delete()
+
+            return Response({
+                'message': 'listing Deleted Successfully'
+            })
