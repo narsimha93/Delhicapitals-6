@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'bookings',
     'rest_framework',# instal  rest_framework
-    # 'rest_framework_simplejwt',# simple jwt
-    # "rest_framework_simplejwt.token_blacklist", # add token to blacklist
+    'rest_framework_simplejwt',# simple jwt
+    "rest_framework_simplejwt.token_blacklist", # add token to blacklist
 ]
 
 MIDDLEWARE = [

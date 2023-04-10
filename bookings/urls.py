@@ -6,7 +6,10 @@ urlpatterns = [
     path("booking/",views.allbookings,name="allbookings"),
     #payment apis
     path('payment/<list_id>', views.payment, name = 'payment'),
-    path('callback/',views.callback, name='callback')
+    path('callback/',views.callback, name='callback'),
+
+    #api
+    path('bookingapi/',views.BookingAPI.as_view()),
    # path('handlerequest/', views.handlerequest, name = 'handlerequest'),
 
 ]

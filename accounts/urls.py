@@ -7,4 +7,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('logout', views.logout, name='logout'),
     path('dashboard', views.dashboard, name='dashboard'),
+#api url
+    path('registerapi/', views.Registerapi.as_view(),name="register"),
+    path('loginapi/', views.Loginapi.as_view()),
 ]

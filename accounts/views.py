@@ -2,7 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
+from .serializer import UserLoginSerializer
 
+# from .serializer import UserLoginSerializer,UserSerializers
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import generics, status, views, permissions
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny,IsAuthenticated
 
 def register(request):
     if request.method == 'POST':
@@ -75,3 +81,26 @@ def dashboard(request):
 # ------------------------ API----------------------------------------------
 
 # register api.
+
+
+
+from django.contrib.auth.models import User
+from .serializer import RegisterSerializer
+from rest_framework import generics
+
+
+class Registerapi(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+    
+
+# login api
+class Loginapi(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = UserLoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

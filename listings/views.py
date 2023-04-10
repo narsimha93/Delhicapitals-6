@@ -117,3 +117,12 @@ class listingAPIView(APIView):
             return Response({
                 'message': 'listing Deleted Successfully'
             })
+        
+
+class searchapi(APIView):
+    def get(self, request, pk=None, format=None):
+            if "keywords":
+                data = Listing.objects.filter(description__icontains=keywords)
+                serializer = listingserializer(data, many=True)
+
+                return Response(serializer.data)

@@ -4,6 +4,13 @@ from django.core.mail import send_mail
 from .models import Contact,transportation, reviews
 from listings.models import Listing
 
+
+from .serializer import TrasportationSerializer, ReviewsSerializer, ContactSerializer
+from django.http.response import Http404
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+
 def contact (request):
     if request.method == "POST":
         listing_id = request.POST['listing_id']
@@ -99,3 +106,38 @@ def postComment(request):
     return redirect("/")
 
 
+
+# ----------------------------------------- APIs----------------------------------------------------------------
+
+# transportation
+
+class transportation(APIView):
+    def post(self, request, format=None):
+        serializer = TrasportationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+# contact
+
+class contatviews(APIView):
+    def post(self, request, format=None):
+        serializer = ContactSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# reviews
+
+class reviewsviews(APIView):
+    def post(self, request, format=None):
+        serializer = ReviewsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
